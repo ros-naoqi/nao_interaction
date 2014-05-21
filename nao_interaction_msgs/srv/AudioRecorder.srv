@@ -1,0 +1,19 @@
+# Service for audio recording via NAO.
+# Takes as request the path to write the recorded audio file and the seconds of 
+# the recording.
+
+std_msgs/String file_path
+std_msgs/Int32 secs
+
+# 0 for "wav", 1 for "ogg"
+std_msgs/Char audio_type
+
+std_msgs/Bool left_channel
+std_msgs/Bool right_channel
+std_msgs/Bool front_channel
+std_msgs/Bool rear_channel
+
+# Typical value is 16000 Hz
+std_msgs/Int32 samplerate
+---
+# Empty response when the recording is done

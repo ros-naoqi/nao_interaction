@@ -1,0 +1,39 @@
+<package>
+  <name>nao_interaction</name>
+  <version>0.0.1</version>
+  <description>
+    <p>
+      Driver package for the Nao robot, providing access to:
+        - NAOqi audio proxies
+        - NAOqi vision proxies
+    </p>
+  </description>
+  <maintainer email="etsardou@gmail.com">Manos Tsardoulias</maintainer>
+  <license>BSD</license>
+
+  <url>http://ros.org/wiki/nao_interaction</url>
+  <url type="bugtracker">https://github.com/ros-nao/nao_extras/issues</url>
+  <url type="repository">https://github.com/ros-nao/nao_extras</url>
+  
+  <author>Manos Tsardoulias</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nao_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_depend>nao_extras_msgs</build_depend>
+
+  <run_depend>rospy</run_depend>
+  <run_depend>roslaunch</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>std_srvs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>diagnostic_msgs</run_depend>
+  <run_depend>nao_msgs</run_depend>
+  <run_depend>nao_extras_msgs</run_depend>
+
+</package>
