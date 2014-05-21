@@ -79,7 +79,7 @@ class NaoAudioInterface(ALModule, NaoNode):
         self.playFileSubscriber = rospy.Subscriber("nao_audio/play_file", String, self.playFile )        
         self.masterVolumeSrv = rospy.Service("nao_audio/master_volume", AudioMasterVolume, self.handleAudioMasterVolumeSrv)
         self.enableRecordSrv = rospy.Service("nao_audio/record", AudioRecorder, self.handleRecorderSrv)
-        #~ self.audioSourceLocalizationPub = rospy.Publisher("nao_audio/audio_source_localization", AudioSourceLocalization)
+        self.audioSourceLocalizationPub = rospy.Publisher("nao_audio/audio_source_localization", AudioSourceLocalization)
         
         self.subscribe()
         
@@ -94,6 +94,11 @@ class NaoAudioInterface(ALModule, NaoNode):
             print("Could not connect to NaoQi's main broker")
             exit(1)
         ALModule.__init__(self, self.moduleName)
+        
+        self.memProxy = ALProxy("ALMemory",self.pip,self.pport)
+        if self.memProxy is None:
+            rospy.logerror("Could not get a proxy to ALMemory on %s:%d", self.pip, self.pport)
+            exit(1)
         
         self.audioPlayerProxy = ALProxy("ALAudioPlayer",self.pip,self.pport)
         if self.audioPlayerProxy is None:
@@ -110,13 +115,13 @@ class NaoAudioInterface(ALModule, NaoNode):
             rospy.logerror("Could not get a proxy to ALAudioDevice on %s:%d", self.pip, self.pport)
             exit(1)
             
-        #~ self.audioSourceLocalizationProxy = ALProxy("ALAudioSourceLocalization",self.pip,self.pport)
-        #~ if self.audioSourceLocalizationProxy is None:
-            #~ rospy.logerror("Could not get a proxy to ALAudioSourceLocalization on %s:%d", self.pip, self.pport)
-            #~ exit(1)
-            #~ 
-        #~ self.audioSourceLocalizationProxy.setParameter("EnergyComputation", 1)
-        #~ self.audioSourceLocalizationProxy.setParameter("Sensibility", 0.5)
+        self.audioSourceLocalizationProxy = ALProxy("ALAudioSourceLocalization",self.pip,self.pport)
+        if self.audioSourceLocalizationProxy is None:
+            rospy.logerror("Could not get a proxy to ALAudioSourceLocalization on %s:%d", self.pip, self.pport)
+            exit(1)
+            
+        self.audioSourceLocalizationProxy.setParameter("EnergyComputation", 1)
+        self.audioSourceLocalizationProxy.setParameter("Sensibility", 0.5)
 
     def playFile(self, req):
         self.audioPlayerProxy.playFile("/home/nao/" + req.data)
@@ -183,15 +188,30 @@ class NaoAudioInterface(ALModule, NaoNode):
         self.unsubscribe()
 
     def subscribe(self):
-        #~ self.memProxy.subscribeToEvent("ALAudioSourceLocalization/SoundLocated", self.moduleName, "onSoundLocated")
-        pass
+        self.memProxy.subscribeToEvent("ALAudioSourceLocalization/SoundLocated", self.moduleName, "onSoundLocated")
+        #~ pass
 
     def unsubscribe(self):
-        #~ self.memProxy.unsubscribeToEvent("ALAudioSourceLocalization/SoundLocated", self.moduleName)
-        pass
+        self.memProxy.unsubscribeToEvent("ALAudioSourceLocalization/SoundLocated", self.moduleName)
+        #~ pass
         
     def onSoundLocated(self, strVarName, value, strMessage):
-        print value
+        msg = AudioSourceLocalization()
+        
+        msg.azimuth.data = value[1][0]
+        msg.elevation.data = value[1][1]
+        msg.confidence.data = value[1][2]
+        msg.energy.data = value[1][3]
+        
+        msg.head_pose.position.x = value[2][0]
+        msg.head_pose.position.y = value[2][1]
+        msg.head_pose.position.z = value[2][2]
+        msg.head_pose.orientation.x = value[2][3]
+        msg.head_pose.orientation.y = value[2][4]
+        msg.head_pose.orientation.z = value[2][5]
+        
+        self.audioSourceLocalizationPub.publish(msg)
+        
 
 if __name__ == '__main__':
   
