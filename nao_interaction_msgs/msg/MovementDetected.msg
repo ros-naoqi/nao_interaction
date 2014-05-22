@@ -1,4 +1,5 @@
 # Message emitted by Nao movement detection module.
+# Contains information about the motion detection module
 
 Header header
 

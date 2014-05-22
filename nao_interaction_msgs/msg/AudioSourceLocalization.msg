@@ -1,4 +1,5 @@
 # Message emitted by Nao ALAudioSourceLocalizationProxy wrapper.
+# Contains information about sound localization
 
 Header header
 

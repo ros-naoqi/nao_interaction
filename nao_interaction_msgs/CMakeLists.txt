@@ -30,9 +30,12 @@ add_message_files(DIRECTORY msg
 #Add service files
 add_service_files(DIRECTORY srv
     FILES
+    #~ nao_vision
+    VisionMotionSensitivity.srv
     #~ nao_audio
     AudioRecorder.srv
     AudioMasterVolume.srv
+    AudioPlayback.srv
 )
 
 #And now generate the messages

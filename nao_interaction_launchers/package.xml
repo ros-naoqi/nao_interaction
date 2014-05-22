@@ -1,30 +1,21 @@
 <package>
-  <name>nao_interaction</name>
+  <name>nao_interaction_launchers</name>
   <version>0.1.0</version>
   <description>
-    <p>
-      Metapackage for the Nao robot, providing access to:
-        - NAOqi audio proxies
-        - NAOqi vision proxies
-    </p>
+    Launchers for bringing up the nodes of nao_interaction metapackage.
   </description>
   <maintainer email="HornungA@informatik.uni-freiburg.de">Armin Hornung</maintainer>
   <license>BSD</license>
 
-  <url>http://ros.org/wiki/nao_interaction</url>
+  <url>http://ros.org/wiki/nao_interaction_launchers</url>
   <url type="bugtracker">https://github.com/ros-nao/nao_interaction/issues</url>
   <url type="repository">https://github.com/ros-nao/nao_interaction</url>
   
   <author>Manos Tsardoulias</author>
-
+  
   <buildtool_depend>catkin</buildtool_depend>
 
-  <export>
-    <metapackage/>
-  </export>
-
   <run_depend>nao_interaction_msgs</run_depend>
-  <run_depend>nao_interaction_launchers</run_depend>
   <run_depend>nao_audio</run_depend>
   <run_depend>nao_vision</run_depend>
 

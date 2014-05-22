@@ -1,4 +1,5 @@
 # Message emitted by Nao landmark detection module.
+# Contains information about the landmarks detected
 
 Header header
 

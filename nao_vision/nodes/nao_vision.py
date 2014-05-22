@@ -60,10 +60,12 @@ from nao_interaction_msgs.msg import (
     FaceDetected,
     MovementDetected,
     LandmarkDetected)
+    
+from nao_interaction_msgs.srv import (
+    VisionMotionSensitivity)
 
 class Constants:
     NODE_NAME = "nao_vision_interface"
-    MODULE_NAME = "ROSNaoVisionModule"
 
 class NaoVisionInterface(ALModule, NaoNode):
     "sss"
@@ -276,13 +278,12 @@ class NaoVisionInterface(ALModule, NaoNode):
 
         self.facesPub.publish(self.faces)
 
-    def handleSensitivityChange(self, req):
-        if (req.data < 0.0) or (req.data > 1.0):
+    def handleSensitivityChangeSrv(self, req):
+        if (req.sensitivity.data < 0.0) or (req.sensitivity.data > 1.0):
             return
         
-        self.movementDetectionProxy.setSensitivity(req.data)
-        print self.movementDetectionProxy.getSensitivity()
-        rospy.loginfo("Sensitivity of nao_movement_detection changed to %d", req.data)
+        self.movementDetectionProxy.setSensitivity(req.sensitivity.data)
+        rospy.loginfo("Sensitivity of nao_movement_detection changed to %f", req.sensitivity.data)
 
     def onMovementDetected(self, strVarName, value, strMessage):
         "Called when movement was detected"
@@ -320,7 +321,7 @@ class NaoVisionInterface(ALModule, NaoNode):
         
     def serveSubscribeMotionSrv(self, req):
         self.movementPub = rospy.Publisher("nao_vision/movement_detected", MovementDetected)
-        self.sensitivitySub = rospy.Subscriber("nao_vision/movement_detection_sensitivity", Float32, self.handleSensitivityChange )
+        self.sensitivitySrv = rospy.Service("nao_vision/movement_detection_sensitivity", VisionMotionSensitivity, self.handleSensitivityChangeSrv )
         self.memProxy.subscribeToEvent("MovementDetection/MovementDetected", self.moduleName, "onMovementDetected")
         self.motion_detection_enabled = True
         
@@ -328,7 +329,7 @@ class NaoVisionInterface(ALModule, NaoNode):
         if self.motion_detection_enabled:
             self.memProxy.unsubscribeToEvent("MovementDetection/MovementDetected", self.moduleName)
             self.movementPub.unregister()
-            self.sensitivitySub.unregister()
+            self.sensitivitySrv.shutdown()
             self.motion_detection_enabled = False
         
     def serveSubscribeLandmarkSrv(self, req):
@@ -345,7 +346,7 @@ class NaoVisionInterface(ALModule, NaoNode):
         
 if __name__ == '__main__':
   
-    ROSNaoVisionModule = NaoVisionInterface(Constants.MODULE_NAME)
+    ROSNaoVisionModule = NaoVisionInterface("ROSNaoVisionModule")
     rospy.spin()
 
     rospy.loginfo("Stopping ROSNaoVisionModule ...")

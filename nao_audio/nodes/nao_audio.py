@@ -56,12 +56,12 @@ from nao_interaction_msgs.msg import (
 
 from nao_interaction_msgs.srv import (
     AudioMasterVolume,
-    AudioRecorder)
+    AudioRecorder,
+    AudioPlayback)
 
 
 class Constants:
     NODE_NAME = "nao_audio_interface"
-    MODULE_NAME = "ROSNaoAudioModule"
 
 class NaoAudioInterface(ALModule, NaoNode):
     def __init__(self, moduleName):
@@ -76,9 +76,10 @@ class NaoAudioInterface(ALModule, NaoNode):
         self.init_almodule()
         
         #~ ROS initializations
-        self.playFileSubscriber = rospy.Subscriber("nao_audio/play_file", String, self.playFile )        
+        self.playFileSrv = rospy.Service("nao_audio/play_file", AudioPlayback, self.playFileSrv )        
         self.masterVolumeSrv = rospy.Service("nao_audio/master_volume", AudioMasterVolume, self.handleAudioMasterVolumeSrv)
         self.enableRecordSrv = rospy.Service("nao_audio/record", AudioRecorder, self.handleRecorderSrv)
+        
         self.audioSourceLocalizationPub = rospy.Publisher("nao_audio/audio_source_localization", AudioSourceLocalization)
         
         self.subscribe()
@@ -95,36 +96,43 @@ class NaoAudioInterface(ALModule, NaoNode):
             exit(1)
         ALModule.__init__(self, self.moduleName)
         
+        #~ Memory proxy registration
         self.memProxy = ALProxy("ALMemory",self.pip,self.pport)
         if self.memProxy is None:
             rospy.logerror("Could not get a proxy to ALMemory on %s:%d", self.pip, self.pport)
             exit(1)
-        
+        #~ ALAudioProxy registration
         self.audioPlayerProxy = ALProxy("ALAudioPlayer",self.pip,self.pport)
         if self.audioPlayerProxy is None:
             rospy.logerror("Could not get a proxy to ALAudioPlayer on %s:%d", self.pip, self.pport)
             exit(1)
-            
+        #~ ALAudioRecorder proxy registration 
         self.audioRecorderProxy = ALProxy("ALAudioRecorder",self.pip,self.pport)
         if self.audioRecorderProxy is None:
             rospy.logerror("Could not get a proxy to ALAudioRecorder on %s:%d", self.pip, self.pport)
             exit(1)
-        
+        #~ ALAudioDevice proxy registration
         self.audioDeviceProxy = ALProxy("ALAudioDevice",self.pip,self.pport)
         if self.audioDeviceProxy is None:
             rospy.logerror("Could not get a proxy to ALAudioDevice on %s:%d", self.pip, self.pport)
             exit(1)
-            
+        #~ ALAudioSourceLocalization registration 
         self.audioSourceLocalizationProxy = ALProxy("ALAudioSourceLocalization",self.pip,self.pport)
         if self.audioSourceLocalizationProxy is None:
             rospy.logerror("Could not get a proxy to ALAudioSourceLocalization on %s:%d", self.pip, self.pport)
             exit(1)
-            
+        #~ ALAudioSourceLocalization parameter trimming
         self.audioSourceLocalizationProxy.setParameter("EnergyComputation", 1)
-        self.audioSourceLocalizationProxy.setParameter("Sensibility", 0.5)
+        self.audioSourceLocalizationProxy.setParameter("Sensibility", 0.8)
 
-    def playFile(self, req):
-        self.audioPlayerProxy.playFile("/home/nao/" + req.data)
+    def playFileSrv(self, req):
+        "Serves the srv request for audio file playback"
+        
+        if req.file_path.data == "":
+            return EmptyResponse
+        
+        self.audioPlayerProxy.playFile("/home/nao/" + req.file_path.data)
+        return EmptyResponse
         
     def handleAudioMasterVolumeSrv(self, req):
         if (req.master_volume.data < 0) or (req.master_volume.data > 100):
@@ -136,29 +144,41 @@ class NaoAudioInterface(ALModule, NaoNode):
     def handleRecorderSrv(self, req):
         
         file_path = req.file_path.data
+        if file_path == "":
+            return EmptyResponse
+            
         secs = req.secs.data
         channels = []
         
         #~ Channel setup
+        channels_enabled = 0
         if req.left_channel.data == True:
             channels.append(1)
+            channels_enabled += 1
         else:
             channels.append(0)
             
         if req.right_channel.data == True:
             channels.append(1)
+            channels_enabled += 1
         else:
             channels.append(0)
             
         if req.front_channel.data == True:
             channels.append(1)
+            channels_enabled += 1
         else:
             channels.append(0)
             
         if req.rear_channel.data == True:
             channels.append(1)
+            channels_enabled += 1
         else:
             channels.append(0)
+       
+        #~ If no channels were selected return
+        if channels_enabled == 0:
+            return EmptyResponse
         
         #~ Set audio type
         audio_type = ""
@@ -189,11 +209,9 @@ class NaoAudioInterface(ALModule, NaoNode):
 
     def subscribe(self):
         self.memProxy.subscribeToEvent("ALAudioSourceLocalization/SoundLocated", self.moduleName, "onSoundLocated")
-        #~ pass
 
     def unsubscribe(self):
         self.memProxy.unsubscribeToEvent("ALAudioSourceLocalization/SoundLocated", self.moduleName)
-        #~ pass
         
     def onSoundLocated(self, strVarName, value, strMessage):
         msg = AudioSourceLocalization()
@@ -215,7 +233,7 @@ class NaoAudioInterface(ALModule, NaoNode):
 
 if __name__ == '__main__':
   
-    ROSNaoAudioModule = NaoAudioInterface(Constants.MODULE_NAME)
+    ROSNaoAudioModule = NaoAudioInterface("ROSNaoAudioModule")
     rospy.spin()
     rospy.loginfo("Stopping ROSNaoAudioModule ...")
     ROSNaoAudioModule.shutdown();        
