@@ -4,7 +4,7 @@
   <description>
     Launchers for bringing up the nodes of nao_interaction metapackage.
   </description>
-  <maintainer email="HornungA@informatik.uni-freiburg.de">Armin Hornung</maintainer>
+  <maintainer email="etsardou@gmail.com">Manos Tsardoulias</maintainer>
   <license>BSD</license>
 
   <url>http://ros.org/wiki/nao_interaction_launchers</url>

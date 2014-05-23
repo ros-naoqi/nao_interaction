@@ -8,7 +8,7 @@
         - NAOqi vision proxies
     </p>
   </description>
-  <maintainer email="HornungA@informatik.uni-freiburg.de">Armin Hornung</maintainer>
+  <maintainer email="etsardou@gmail.com">Manos Tsardoulias</maintainer>
   <license>BSD</license>
 
   <url>http://ros.org/wiki/nao_interaction</url>
