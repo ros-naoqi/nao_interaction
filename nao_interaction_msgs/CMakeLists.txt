@@ -30,6 +30,8 @@ add_message_files(DIRECTORY msg
 #Add service files
 add_service_files(DIRECTORY srv
     FILES
+    #~ General
+    NaoSetFile.srv
     #~ nao_vision
     VisionMotionSensitivity.srv
     #~ nao_audio

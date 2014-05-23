@@ -57,7 +57,8 @@ from nao_interaction_msgs.msg import (
 from nao_interaction_msgs.srv import (
     AudioMasterVolume,
     AudioRecorder,
-    AudioPlayback)
+    AudioPlayback,
+    NaoSetFile)
 
 
 class Constants:
@@ -75,10 +76,15 @@ class NaoAudioInterface(ALModule, NaoNode):
         self.moduleName = moduleName
         self.init_almodule()
         
+        #~ Variables initialization
+        self.recording_started = False
+        
         #~ ROS initializations
         self.playFileSrv = rospy.Service("nao_audio/play_file", AudioPlayback, self.playFileSrv )        
         self.masterVolumeSrv = rospy.Service("nao_audio/master_volume", AudioMasterVolume, self.handleAudioMasterVolumeSrv)
         self.enableRecordSrv = rospy.Service("nao_audio/record", AudioRecorder, self.handleRecorderSrv)
+        self.startRecordSrv = rospy.Service("nao_audio/start_record", NaoSetFile, self.handleStartRecorderSrv)
+        self.stopRecordSrv = rospy.Service("nao_audio/stop_record", Empty, self.handleStopRecorderSrv)
         
         self.audioSourceLocalizationPub = rospy.Publisher("nao_audio/audio_source_localization", AudioSourceLocalization)
         
@@ -202,6 +208,21 @@ class NaoAudioInterface(ALModule, NaoNode):
         rospy.sleep(secs)        
         self.audioRecorderProxy.stopMicrophonesRecording()
         
+        return EmptyResponse
+        
+    def handleStartRecorderSrv(self, req):
+        
+        file_path = req.file_path.data
+        if file_path == "":
+            return EmptyResponse
+
+        self.audioDeviceProxy.startMicrophonesRecording("/home/nao/" + file_path)
+        self.recording_started = True
+        return EmptyResponse
+        
+    def handleStopRecorderSrv(self, req):
+        if self.recording_started:
+            self.audioDeviceProxy.stopMicrophonesRecording()
         return EmptyResponse
     
     def shutdown(self): 

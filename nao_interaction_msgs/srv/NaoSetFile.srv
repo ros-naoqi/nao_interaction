@@ -1,0 +1,5 @@
+# General service to set a path
+
+std_msgs/String file_path
+---
+# Empty response when the playback is done
