@@ -1,0 +1,37 @@
+<package>
+  <name>nao_vision</name>
+  <version>0.1.0</version>
+  <description>
+    <p>
+      Ppackage for the Nao robot, providing access to NAOqi vision proxies
+    </p>
+  </description>
+  <maintainer email="etsardou@gmail.com">Manos Tsardoulias</maintainer>
+  <license>BSD</license>
+
+  <url>http://ros.org/wiki/nao_vision</url>
+  <url type="bugtracker">https://github.com/ros-nao/nao_interaction/issues</url>
+  <url type="repository">https://github.com/ros-nao/nao_interaction</url>
+  
+  <author>Manos Tsardoulias</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nao_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_depend>nao_interaction_msgs</build_depend>
+
+  <run_depend>rospy</run_depend>
+  <run_depend>roslaunch</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>std_srvs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>diagnostic_msgs</run_depend>
+  <run_depend>nao_msgs</run_depend>
+  <run_depend>nao_interaction_msgs</run_depend>
+
+</package>

@@ -1,0 +1,6 @@
+# Service for audio playback via NAO.
+# Takes as request the path of the audio file to playback
+
+std_msgs/String file_path
+---
+# Empty response when the playback is done

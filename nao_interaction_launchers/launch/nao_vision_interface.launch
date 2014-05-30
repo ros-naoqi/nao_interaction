@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="force_python" default="true" />
+  <arg name="nao_ip" default="$(optenv NAO_IP 192.168.0.102)" />
+  <arg name="nao_port" default="$(optenv NAO_PORT 9559)" />
+    
+  <node 
+    pkg="nao_vision" 
+    type="nao_vision.py" 
+    name="nao_vision" 
+    args="--pip=$(arg nao_ip) --pport=$(arg nao_port)"
+    output="screen"
+  />
+
+</launch>

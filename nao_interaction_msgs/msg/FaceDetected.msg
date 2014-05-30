@@ -1,0 +1,99 @@
+# Message emitted by Nao face detection module.
+# It contains the list of faces detected and the cameras poses
+
+Header header
+
+# Face-specific related information
+
+std_msgs/Int32 face_id
+std_msgs/Float32 score_reco
+std_msgs/String face_label
+
+# Shape related information
+
+std_msgs/Float32 shape_alpha
+std_msgs/Float32 shape_beta
+std_msgs/Float32 shape_sizeX
+std_msgs/Float32 shape_sizeY
+
+# Eyes related information
+
+std_msgs/Float32 right_eye_eyeCenter_x
+std_msgs/Float32 right_eye_eyeCenter_y
+std_msgs/Float32 right_eye_noseSideLimit_x
+std_msgs/Float32 right_eye_noseSideLimit_y
+std_msgs/Float32 right_eye_earSideLimit_x
+std_msgs/Float32 right_eye_earSideLimit_y
+std_msgs/Float32 right_eye_topLimit_x
+std_msgs/Float32 right_eye_topLimit_y
+std_msgs/Float32 right_eye_bottomLimit_x
+std_msgs/Float32 right_eye_bottomLimit_y
+std_msgs/Float32 right_eye_midTopEarLimit_x
+std_msgs/Float32 right_eye_midTopEarLimit_y
+std_msgs/Float32 right_eye_midTopNoseLimit_x
+std_msgs/Float32 right_eye_midTopNoseLimit_y
+
+std_msgs/Float32 left_eye_eyeCenter_x
+std_msgs/Float32 left_eye_eyeCenter_y
+std_msgs/Float32 left_eye_noseSideLimit_x
+std_msgs/Float32 left_eye_noseSideLimit_y
+std_msgs/Float32 left_eye_earSideLimit_x
+std_msgs/Float32 left_eye_earSideLimit_y
+std_msgs/Float32 left_eye_topLimit_x
+std_msgs/Float32 left_eye_topLimit_y
+std_msgs/Float32 left_eye_bottomLimit_x
+std_msgs/Float32 left_eye_bottomLimit_y
+std_msgs/Float32 left_eye_midTopEarLimit_x
+std_msgs/Float32 left_eye_midTopEarLimit_y
+std_msgs/Float32 left_eye_midTopNoseLimit_x
+std_msgs/Float32 left_eye_midTopNoseLimit_y
+
+# Eyebrows related information
+
+std_msgs/Float32 right_eyebrow_noseSideLimit_x
+std_msgs/Float32 right_eyebrow_noseSideLimit_y
+std_msgs/Float32 right_eyebrow_center_x
+std_msgs/Float32 right_eyebrow_center_y
+std_msgs/Float32 right_eyebrow_earSideLimit_x
+std_msgs/Float32 right_eyebrow_earSideLimit_y
+
+std_msgs/Float32 left_eyebrow_noseSideLimit_x
+std_msgs/Float32 left_eyebrow_noseSideLimit_y
+std_msgs/Float32 left_eyebrow_center_x
+std_msgs/Float32 left_eyebrow_center_y
+std_msgs/Float32 left_eyebrow_earSideLimit_x
+std_msgs/Float32 left_eyebrow_earSideLimit_y
+
+# Nose related information
+
+std_msgs/Float32 nose_bottomCenterLimit_x
+std_msgs/Float32 nose_bottomCenterLimit_y
+std_msgs/Float32 nose_bottomLeftLimit_x
+std_msgs/Float32 nose_bottomLeftLimit_y
+std_msgs/Float32 nose_bottomRightLimit_x
+std_msgs/Float32 nose_bottomRightLimit_y
+
+# Mouth related information
+
+std_msgs/Float32 mouth_leftLimit_x
+std_msgs/Float32 mouth_leftLimit_y
+std_msgs/Float32 mouth_rightLimit_x
+std_msgs/Float32 mouth_rightLimit_y
+std_msgs/Float32 mouth_topLimit_x
+std_msgs/Float32 mouth_topLimit_y
+std_msgs/Float32 mouth_bottomLimit_x
+std_msgs/Float32 mouth_bottomLimit_y
+std_msgs/Float32 mouth_midTopLeftLimit_x
+std_msgs/Float32 mouth_midTopLeftLimit_y
+std_msgs/Float32 mouth_midTopRightLimit_x
+std_msgs/Float32 mouth_midTopRightLimit_y
+std_msgs/Float32 mouth_midBottomRightLimit_x
+std_msgs/Float32 mouth_midBottomRightLimit_y
+std_msgs/Float32 mouth_midBottomLeftLimit_x
+std_msgs/Float32 mouth_midBottomLeftLimit_y
+
+# Camera related information
+
+geometry_msgs/Pose camera_0_pose
+geometry_msgs/Pose camera_1_pose
+std_msgs/Int32 camera_id

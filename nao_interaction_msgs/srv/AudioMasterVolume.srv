@@ -1,0 +1,6 @@
+# Service for setting the master volume of NAO
+# Input must be between 0 and 100
+
+std_msgs/Int32 master_volume
+---
+# Empty response 

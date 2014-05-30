@@ -1,0 +1,6 @@
+# Service for setting the sensitivity of the movement detection
+# Input must be between 0.0 and 1.0
+
+std_msgs/Float32 sensitivity
+---
+# Empty response 

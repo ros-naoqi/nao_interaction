@@ -1,0 +1,22 @@
+<package>
+  <name>nao_interaction_launchers</name>
+  <version>0.1.0</version>
+  <description>
+    Launchers for bringing up the nodes of nao_interaction metapackage.
+  </description>
+  <maintainer email="etsardou@gmail.com">Manos Tsardoulias</maintainer>
+  <license>BSD</license>
+
+  <url>http://ros.org/wiki/nao_interaction_launchers</url>
+  <url type="bugtracker">https://github.com/ros-nao/nao_interaction/issues</url>
+  <url type="repository">https://github.com/ros-nao/nao_interaction</url>
+  
+  <author>Manos Tsardoulias</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>nao_interaction_msgs</run_depend>
+  <run_depend>nao_audio</run_depend>
+  <run_depend>nao_vision</run_depend>
+
+</package>

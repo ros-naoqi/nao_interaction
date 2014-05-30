@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="force_python" default="true" />
+  <arg name="nao_ip" default="$(optenv NAO_IP 192.168.0.102)" />
+  <arg name="nao_port" default="$(optenv NAO_PORT 9559)" />
+    
+  <node 
+    pkg="nao_audio" 
+    type="nao_audio.py" 
+    name="nao_audio" 
+    args="--pip=$(arg nao_ip) --pport=$(arg nao_port)"
+    output="screen"
+  />
+
+</launch>
