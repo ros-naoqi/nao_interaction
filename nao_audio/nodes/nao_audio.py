@@ -130,6 +130,12 @@ class NaoAudioInterface(ALModule, NaoNode):
         #~ ALAudioSourceLocalization parameter trimming
         self.audioSourceLocalizationProxy.setParameter("EnergyComputation", 1)
         self.audioSourceLocalizationProxy.setParameter("Sensibility", 0.8)
+        
+        #~ ALLeds registration
+        self.ledsProxy = ALProxy("ALLeds",self.pip,self.pport)
+        if self.ledsProxy is None:
+            rospy.logerror("Could not get a proxy to ALLedsProxy on %s:%d", self.pip, self.pport)
+            exit(1)
 
     def playFileSrv(self, req):
         "Serves the srv request for audio file playback"
@@ -204,9 +210,13 @@ class NaoAudioInterface(ALModule, NaoNode):
         if (secs <= 0.0):
             return EmptyResponse
 
+        self.audioDeviceProxy.playSine(2000, 50, 0, 0.3);
         self.audioRecorderProxy.startMicrophonesRecording("/home/nao/" + file_path, audio_type, samplerate, channels)
+        self.ledsProxy.fadeRGB("FaceLeds", 0x00ff0000, 0.5)
         rospy.sleep(secs)        
+        self.ledsProxy.fadeRGB("FaceLeds", 0x000000ff, 0.5)
         self.audioRecorderProxy.stopMicrophonesRecording()
+        self.audioDeviceProxy.playSine(2000, 50, 0, 0.3);
         
         return EmptyResponse
         
@@ -215,6 +225,9 @@ class NaoAudioInterface(ALModule, NaoNode):
         file_path = req.file_path.data
         if file_path == "":
             return EmptyResponse
+        
+        self.audioDeviceProxy.playSine(2000, 50, 0, 0.3);
+        self.ledsProxy.fadeRGB("FaceLeds", 0x00ff0000, 0.5)
 
         self.audioDeviceProxy.startMicrophonesRecording("/home/nao/" + file_path)
         self.recording_started = True
@@ -223,6 +236,8 @@ class NaoAudioInterface(ALModule, NaoNode):
     def handleStopRecorderSrv(self, req):
         if self.recording_started:
             self.audioDeviceProxy.stopMicrophonesRecording()
+        self.ledsProxy.fadeRGB("FaceLeds", 0x000000ff, 0.5)
+        self.audioDeviceProxy.playSine(2000, 50, 0, 0.3);
         return EmptyResponse
     
     def shutdown(self): 
