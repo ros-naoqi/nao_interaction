@@ -5,14 +5,7 @@ project(nao_audio)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Find all required modules for compilation
-find_package(catkin REQUIRED COMPONENTS
-    roscpp
-    sensor_msgs
-    geometry_msgs
-    nao_interaction_msgs
-)
-
-find_package(Boost QUIET COMPONENTS program_options signals)
+find_package(catkin)
 
 catkin_package()
 
