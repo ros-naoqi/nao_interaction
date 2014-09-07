@@ -2,6 +2,11 @@
 Changelog for package nao_audio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* remove useless dependencies to fix build
+* Contributors: Vincent Rabaud
+
 0.1.2 (2014-09-07)
 ------------------
 * add a maintainer
