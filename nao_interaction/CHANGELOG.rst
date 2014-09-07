@@ -1,8 +1,16 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for package nao_interaction
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.1.0 (2014-05-XX)
+Forthcoming
+-----------
+* update changelogs
+* Contributors: Vincent Rabaud
+
+0.1.1 (2014-09-07)
 ------------------
-* New nao_interaction metapackage
-
+* Corrected maintainer name in package.xmls
+* Added the nao_interaction metapackage, the nao_interaction_launchers, nao_interaction_msgs, nao_vision and nao_audio packages
+* SoundLocated event works
+* Initial commit. Transferring files from etsardou/nao_extras. Adding nao_vision and nao_audio functionalities
+* Contributors: Manos Tsardoulias
