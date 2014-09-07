@@ -2,8 +2,8 @@
 Changelog for package nao_audio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.2 (2014-09-07)
+------------------
 * add a maintainer
 * remove obsolete Python code
 * Contributors: Vincent Rabaud

@@ -2,8 +2,8 @@
 Changelog for package nao_interaction
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.2 (2014-09-07)
+------------------
 * update changelogs
 * Contributors: Vincent Rabaud
 
