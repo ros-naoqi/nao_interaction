@@ -2,6 +2,11 @@
 Changelog for package nao_audio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* update to use NaoqiNode
+* Contributors: Kei Okada
+
 0.1.3 (2014-09-08)
 ------------------
 * remove useless dependencies to fix build
