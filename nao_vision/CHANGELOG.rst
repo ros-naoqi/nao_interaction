@@ -2,8 +2,8 @@
 Changelog for package nao_vision
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.4 (2014-11-13)
+------------------
 * update to use NaoqiNode
 * Contributors: Kei Okada
 

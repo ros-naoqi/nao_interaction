@@ -1,6 +1,6 @@
 <package>
   <name>nao_audio</name>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
   <description>
     Package for the Nao robot, providing access to NAOqi audio proxies
   </description>
