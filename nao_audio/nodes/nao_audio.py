@@ -40,8 +40,7 @@ from naoqi import (
     ALBroker, 
     ALProxy )
 
-from nao_driver import (
-    NaoNode)
+from naoqi_driver.naoqi_node import NaoqiNode
 
 from std_msgs.msg import (
     String, 
@@ -63,11 +62,10 @@ from nao_interaction_msgs.srv import (
 class Constants:
     NODE_NAME = "nao_audio_interface"
 
-class NaoAudioInterface(ALModule, NaoNode):
+class NaoAudioInterface(ALModule, NaoqiNode):
     def __init__(self, moduleName):
         # ROS initialization
-        NaoNode.__init__(self)
-        rospy.init_node( Constants.NODE_NAME )
+        NaoqiNode.__init__(self, Constants.NODE_NAME )
         
         # NAOQi initialization
         self.ip = ""
