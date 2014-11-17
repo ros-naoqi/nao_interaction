@@ -32,6 +32,7 @@ add_service_files(DIRECTORY srv
     FILES
     #~ nao_vision
     VisionMotionSensitivity.srv
+    LearnFace.srv
     #~ nao_audio
     AudioRecorder.srv
     AudioMasterVolume.srv

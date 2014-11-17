@@ -62,6 +62,8 @@ from nao_interaction_msgs.msg import (
     LandmarkDetected)
     
 from nao_interaction_msgs.srv import (
+    LearnFace,
+    LearnFaceResponse,
     VisionMotionSensitivity)
 
 class Constants:
@@ -92,6 +94,8 @@ class NaoVisionInterface(ALModule, NaoqiNode):
         self.unsubscribeMotionSrv = rospy.Service("nao_vision/motion_detection/disable", Empty, self.serveUnsubscribeMotionSrv)
         self.subscribeLandmarkSrv = rospy.Service("nao_vision/landmark_detection/enable", Empty, self.serveSubscribeLandmarkSrv)
         self.unsubscribeLandmarkSrv = rospy.Service("nao_vision/landmark_detection/disable", Empty, self.serveUnsubscribeLandmarkSrv)
+        self.learnFaceSrv = rospy.Service('nao_vision/face_detection/learn_face', LearnFace, self.learnFaceSrv)
+        self.forgetPersonSrv = rospy.Service('nao_vision/face_detection/forget_person', LearnFace, self.forgetPersonSrv)
         
         self.subscribe()
         
@@ -120,6 +124,11 @@ class NaoVisionInterface(ALModule, NaoqiNode):
         self.movementDetectionProxy = ALProxy("ALMovementDetection",self.pip,self.pport)
         if self.movementDetectionProxy is None:
             rospy.logerror("Could not get a proxy to ALMovementDetection on %s:%d", self.pip, self.pport)
+            exit(1)
+
+        self.faceDetectionProxy = ALProxy("ALFaceDetection",self.pip,self.pport)
+        if self.faceDetectionProxy is None:
+            rospy.logerror("Could not get a proxy to ALFaceDetection on %s:%d", self.pip, self.pport)
             exit(1)
 
     def shutdown(self): 
@@ -342,6 +351,16 @@ class NaoVisionInterface(ALModule, NaoqiNode):
             self.memProxy.unsubscribeToEvent("LandmarkDetected", self.moduleName)
             self.landmarkPub.unregister()
             self.landmark_detection_enabled = False
+
+    def learnFaceSrv(self, req):
+        res = LearnFaceResponse()
+        res.result.data = self.faceDetectionProxy.learnFace(req.name.data)
+        return res
+
+    def forgetPersonSrv(self, req):
+        res = LearnFaceResponse()
+        res.result.data = self.faceDetectionProxy.forgetPerson(req.name.data)
+        return res
         
 if __name__ == '__main__':
   
