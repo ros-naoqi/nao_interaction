@@ -120,7 +120,7 @@ class NaoAudioInterface(ALModule, NaoqiNode):
             rospy.logerror("Could not get a proxy to ALAudioSourceLocalization on %s:%d", self.pip, self.pport)
             exit(1)
         #~ ALAudioSourceLocalization parameter trimming
-        self.audioSourceLocalizationProxy.setParameter("EnergyComputation", 1)
+        self.audioSourceLocalizationProxy.setParameter("EnergyComputation", True)
         self.audioSourceLocalizationProxy.setParameter("Sensibility", 0.8)
 
     def playFileSrv(self, req):
