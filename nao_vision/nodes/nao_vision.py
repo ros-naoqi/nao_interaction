@@ -83,9 +83,9 @@ class NaoVisionInterface(ALModule, NaoqiNode):
         
         #~ Variable initialization
         self.faces = FaceDetected()  
-        face_detection_enabled = False
-        motion_detection_enabled = False
-        landmark_detection_enabled = False
+        self.face_detection_enabled = False
+        self.motion_detection_enabled = False
+        self.landmark_detection_enabled = False
              
         #~ ROS initializations
         self.subscribeFaceSrv = rospy.Service("nao_vision/face_detection/enable", Empty, self.serveSubscribeFaceSrv)
@@ -139,11 +139,11 @@ class NaoVisionInterface(ALModule, NaoqiNode):
         pass
 
     def unsubscribe(self):
-        if landmark_detection_enabled:
+        if self.landmark_detection_enabled:
             self.memProxy.unsubscribeToEvent("LandmarkDetected", self.moduleName)
-        if face_detection_enabled:
+        if self.face_detection_enabled:
             self.memProxy.unsubscribeToEvent("FaceDetected", self.moduleName)
-        if motion_detection_enabled:
+        if self.motion_detection_enabled:
             self.memProxy.unsubscribeToEvent("MovementDetection/MovementDetected", self.moduleName)
         
 
