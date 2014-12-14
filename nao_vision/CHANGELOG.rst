@@ -2,8 +2,8 @@
 Changelog for package nao_vision
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.5 (2014-12-14)
+------------------
 * add self. to global variables
 * add learn face service
 * Contributors: Kei Okada, tarukosu

@@ -1,6 +1,6 @@
 <package>
   <name>nao_interaction_msgs</name>
-  <version>0.1.4</version>
+  <version>0.1.5</version>
   <description>
     Messages and services declarations for the nao_interaction metapackage
   </description>

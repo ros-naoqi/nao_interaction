@@ -1,6 +1,6 @@
 <package>
   <name>nao_interaction_launchers</name>
-  <version>0.1.4</version>
+  <version>0.1.5</version>
   <description>
     Launchers for bringing up the nodes of nao_interaction metapackage.
   </description>

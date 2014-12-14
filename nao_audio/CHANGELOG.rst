@@ -2,8 +2,8 @@
 Changelog for package nao_audio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.5 (2014-12-14)
+------------------
 * change value to boolean
 * Contributors: kochigami
 
