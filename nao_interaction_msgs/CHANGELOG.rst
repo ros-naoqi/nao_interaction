@@ -2,6 +2,11 @@
 Changelog for package nao_interaction_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add learn face service
+* Contributors: tarukosu
+
 0.1.4 (2014-11-13)
 ------------------
 

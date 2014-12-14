@@ -2,6 +2,9 @@
 Changelog for package nao_interaction
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.1.4 (2014-11-13)
 ------------------
 

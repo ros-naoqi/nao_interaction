@@ -2,6 +2,11 @@
 Changelog for package nao_audio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* change value to boolean
+* Contributors: kochigami
+
 0.1.4 (2014-11-13)
 ------------------
 * update to use NaoqiNode
