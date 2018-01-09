@@ -35,7 +35,8 @@ add_service_files(DIRECTORY srv
     LearnFace.srv
     #~ nao_audio
     AudioRecorder.srv
-    AudioMasterVolume.srv
+    SetAudioMasterVolume.srv
+    GetAudioMasterVolume.srv
     AudioPlayback.srv
 )
 

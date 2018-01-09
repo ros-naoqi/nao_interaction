@@ -54,7 +54,8 @@ from nao_interaction_msgs.msg import (
     AudioSourceLocalization)
 
 from nao_interaction_msgs.srv import (
-    AudioMasterVolume,
+    SetAudioMasterVolumeResponse,
+    SetAudioMasterVolume,
     AudioRecorder,
     AudioPlayback)
 
@@ -75,7 +76,7 @@ class NaoAudioInterface(ALModule, NaoqiNode):
         
         #~ ROS initializations
         self.playFileSrv = rospy.Service("nao_audio/play_file", AudioPlayback, self.playFileSrv )        
-        self.masterVolumeSrv = rospy.Service("nao_audio/master_volume", AudioMasterVolume, self.handleAudioMasterVolumeSrv)
+        self.masterVolumeSrv = rospy.Service("nao_audio/master_volume", SetAudioMasterVolume, self.handleAudioMasterVolumeSrv)
         self.enableRecordSrv = rospy.Service("nao_audio/record", AudioRecorder, self.handleRecorderSrv)
         
         self.audioSourceLocalizationPub = rospy.Publisher("nao_audio/audio_source_localization", AudioSourceLocalization)
@@ -134,11 +135,11 @@ class NaoAudioInterface(ALModule, NaoqiNode):
         
     def handleAudioMasterVolumeSrv(self, req):
         if (req.master_volume.data < 0) or (req.master_volume.data > 100):
-            return EmptyResponse
-        
+            return
+
         self.audioDeviceProxy.setOutputVolume(req.master_volume.data)
-        return EmptyResponse
-    
+        return SetAudioMasterVolumeResponse()
+
     def handleRecorderSrv(self, req):
         
         file_path = req.file_path.data
