@@ -1,0 +1,5 @@
+# Service for getting the master volume of NAO and Pepper
+
+---
+# Output must be between 0 and 100
+std_msgs/Int32 master_volume

@@ -1,4 +1,4 @@
-# Service for setting the master volume of NAO
+# Service for setting the master volume of NAO and Pepper
 # Input must be between 0 and 100
 
 std_msgs/Int32 master_volume
