@@ -98,27 +98,27 @@ class NaoAudioInterface(ALModule, NaoqiNode):
         #~ Memory proxy registration
         self.memProxy = ALProxy("ALMemory",self.pip,self.pport)
         if self.memProxy is None:
-            rospy.logerror("Could not get a proxy to ALMemory on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALMemory on %s:%d", self.pip, self.pport)
             exit(1)
         #~ ALAudioProxy registration
         self.audioPlayerProxy = ALProxy("ALAudioPlayer",self.pip,self.pport)
         if self.audioPlayerProxy is None:
-            rospy.logerror("Could not get a proxy to ALAudioPlayer on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALAudioPlayer on %s:%d", self.pip, self.pport)
             exit(1)
         #~ ALAudioRecorder proxy registration 
         self.audioRecorderProxy = ALProxy("ALAudioRecorder",self.pip,self.pport)
         if self.audioRecorderProxy is None:
-            rospy.logerror("Could not get a proxy to ALAudioRecorder on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALAudioRecorder on %s:%d", self.pip, self.pport)
             exit(1)
         #~ ALAudioDevice proxy registration
         self.audioDeviceProxy = ALProxy("ALAudioDevice",self.pip,self.pport)
         if self.audioDeviceProxy is None:
-            rospy.logerror("Could not get a proxy to ALAudioDevice on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALAudioDevice on %s:%d", self.pip, self.pport)
             exit(1)
         #~ ALAudioSourceLocalization registration 
         self.audioSourceLocalizationProxy = ALProxy("ALAudioSourceLocalization",self.pip,self.pport)
         if self.audioSourceLocalizationProxy is None:
-            rospy.logerror("Could not get a proxy to ALAudioSourceLocalization on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALAudioSourceLocalization on %s:%d", self.pip, self.pport)
             exit(1)
         #~ ALAudioSourceLocalization parameter trimming
         self.audioSourceLocalizationProxy.setParameter("EnergyComputation", True)
