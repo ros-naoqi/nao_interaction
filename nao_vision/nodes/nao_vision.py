@@ -113,22 +113,22 @@ class NaoVisionInterface(ALModule, NaoqiNode):
         
         self.memProxy = ALProxy("ALMemory",self.pip,self.pport)
         if self.memProxy is None:
-            rospy.logerror("Could not get a proxy to ALMemory on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALMemory on %s:%d", self.pip, self.pport)
             exit(1)
             
         self.landmarkDetectionProxy = ALProxy("ALLandMarkDetection",self.pip,self.pport)
         if self.landmarkDetectionProxy is None:
-            rospy.logerror("Could not get a proxy to ALLandMarkDetection on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALLandMarkDetection on %s:%d", self.pip, self.pport)
             exit(1)
         
         self.movementDetectionProxy = ALProxy("ALMovementDetection",self.pip,self.pport)
         if self.movementDetectionProxy is None:
-            rospy.logerror("Could not get a proxy to ALMovementDetection on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALMovementDetection on %s:%d", self.pip, self.pport)
             exit(1)
 
         self.faceDetectionProxy = ALProxy("ALFaceDetection",self.pip,self.pport)
         if self.faceDetectionProxy is None:
-            rospy.logerror("Could not get a proxy to ALFaceDetection on %s:%d", self.pip, self.pport)
+            rospy.logerr("Could not get a proxy to ALFaceDetection on %s:%d", self.pip, self.pport)
             exit(1)
 
     def shutdown(self): 
