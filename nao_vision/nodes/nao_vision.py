@@ -64,7 +64,8 @@ from nao_interaction_msgs.msg import (
 from nao_interaction_msgs.srv import (
     LearnFace,
     LearnFaceResponse,
-    VisionMotionSensitivity)
+    VisionMotionSensitivity,
+    VisionMotionSensitivityResponse)
 
 class Constants:
     NODE_NAME = "nao_vision_interface"
@@ -287,32 +288,36 @@ class NaoVisionInterface(ALModule, NaoqiNode):
         self.facesPub.publish(self.faces)
 
     def handleSensitivityChangeSrv(self, req):
+        res = VisionMotionSensitivityResponse()
         if (req.sensitivity.data < 0.0) or (req.sensitivity.data > 1.0):
-            return
+            return res
         
         self.movementDetectionProxy.setSensitivity(req.sensitivity.data)
         rospy.loginfo("Sensitivity of nao_movement_detection changed to %f", req.sensitivity.data)
+        return res
 
     def onMovementDetected(self, strVarName, value, strMessage):
         "Called when movement was detected"
         datavar = self.memProxy.getData("MovementDetection/MovementInfo")
+        if len(datavar) <= 0:
+          return
         
         movement = MovementDetected()  
         
-        movement.gravity_center.x = datavar[0][0][0]
-        movement.gravity_center.y = datavar[0][0][1]
+        movement.gravity_center.x = datavar[1][0][0][0]
+        movement.gravity_center.y = datavar[1][0][0][1]
 
-        movement.mean_velocity.x = datavar[0][1][0]
-        movement.mean_velocity.y = datavar[0][1][1]
+        movement.mean_velocity.x = 0
+        movement.mean_velocity.y = 0
 
-        for i in range(0, len(datavar[0][2])):
+        if len(datavar[1][0]) >= 5:
           movement.points_poses.append(Point())
-          movement.points_poses[i].x = datavar[0][2][i][0]
-          movement.points_poses[i].y = datavar[0][2][i][1]
+          movement.points_poses[0].x = datavar[1][0][5][0]
+          movement.points_poses[0].y = datavar[1][0][5][1]
           
           movement.points_speeds.append(Point())
-          movement.points_speeds[i].x = datavar[0][3][i][0]
-          movement.points_speeds[i].y = datavar[0][3][i][1]
+          movement.points_speeds[0].x = 0
+          movement.points_speeds[0].y = 0
         
         self.movementPub.publish(movement)
 
@@ -320,18 +325,21 @@ class NaoVisionInterface(ALModule, NaoqiNode):
         self.facesPub = rospy.Publisher("nao_vision/faces_detected", FaceDetected)
         self.memProxy.subscribeToEvent("FaceDetected", self.moduleName, "onFaceDetected")
         self.face_detection_enabled = True
+        return EmptyResponse()
         
     def serveUnsubscribeFaceSrv(self, req):
         if self.face_detection_enabled:
             self.memProxy.unsubscribeToEvent("FaceDetected", self.moduleName)
             self.facesPub.unregister()
             self.face_detection_enabled = False
+        return EmptyResponse()
         
     def serveSubscribeMotionSrv(self, req):
         self.movementPub = rospy.Publisher("nao_vision/movement_detected", MovementDetected)
         self.sensitivitySrv = rospy.Service("nao_vision/movement_detection_sensitivity", VisionMotionSensitivity, self.handleSensitivityChangeSrv )
         self.memProxy.subscribeToEvent("MovementDetection/MovementDetected", self.moduleName, "onMovementDetected")
         self.motion_detection_enabled = True
+        return EmptyResponse()
         
     def serveUnsubscribeMotionSrv(self, req):
         if self.motion_detection_enabled:
@@ -339,18 +347,21 @@ class NaoVisionInterface(ALModule, NaoqiNode):
             self.movementPub.unregister()
             self.sensitivitySrv.shutdown()
             self.motion_detection_enabled = False
+        return EmptyResponse()
         
     def serveSubscribeLandmarkSrv(self, req):
         self.landmarkPub = rospy.Publisher("nao_vision/landmark_detected", LandmarkDetected)
         self.memProxy.subscribeToEvent("LandmarkDetected", self.moduleName, "onLandmarkDetected")
         self.landmarkDetectionProxy.updatePeriod("ROSNaoVisionModuleLandmarkDetected", 200)
         self.landmark_detection_enabled = True
+        return EmptyResponse()
         
     def serveUnsubscribeLandmarkSrv(self, req):
         if self.landmark_detection_enabled:
             self.memProxy.unsubscribeToEvent("LandmarkDetected", self.moduleName)
             self.landmarkPub.unregister()
             self.landmark_detection_enabled = False
+        return EmptyResponse()
 
     def learnFaceSrv(self, req):
         res = LearnFaceResponse()
